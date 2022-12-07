@@ -28,22 +28,22 @@ public class FuncBranch {
 
 		ArrayList<Boolean> checker = new ArrayList<>();
 
-		for (int i = 0; i < branches.get(i).getCustomers().size(); i++) {
+		for (int j = 0; j < branches.size(); j++) {
 
-			if (branches.get(i).getName().equals(customerName)) {
+			if (branches.get(j).getName().equals(customerName)) {
 
-				ArrayList<Customer> customers = branches.get(i).getCustomers();
+				ArrayList<Customer> customers = branches.get(j).getCustomers();
 
-				for (int j = 0; j < customers.size(); j++) {
+				for (int k = 0; k < customers.size(); k++) {
 
-					checker.add(i, (!customers.get(j).getName().equals(customerName)) ? true : false);
+					checker.add(j, (!customers.get(k).getName().equals(customerName)) ? true : false);
 
 				}
 
 			}
 
-			if (checker.get(i)) {
-				branches.get(i).newCustomer(customerName, initialAmount);
+			if (checker.get(j)) {
+				branches.get(j).newCustomer(customerName, initialAmount);
 				updateFile(branches);
 			}
 
@@ -153,7 +153,8 @@ public class FuncBranch {
 
 	public static void updateFile(ArrayList<Branch> branches) {
 		try (ObjectOutputStream os = new ObjectOutputStream(
-				new FileOutputStream("C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\branches.dat"))) { // MUDAR A DIR AQUI
+				new FileOutputStream("C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\branches.dat"))) { // MUDAR A
+																											// DIR AQUI
 			os.writeObject(branches);
 			os.flush();
 		} catch (IOException e) {

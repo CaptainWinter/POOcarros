@@ -12,9 +12,9 @@ public class RequestData {
 		return Ler.umaString();
 	}
 
-	public static double askCustomerInitialAmount() {
+	public static int askCustomerInitialAmount() {
 		System.out.println("\nDigite o saldo do cliente:");
-		return Ler.umDouble();
+		return Ler.umInt();
 	}
 
 	public static String askCarName() {

@@ -7,7 +7,7 @@ public class UpdateData {
 		SingleAbstractMethod myInterface = (p1, p2, p3) -> {
 
 			String branchName, customerName, carName;
-			double customerInitialAmount = -1;
+			int customerInitialAmount = -1;
 			double carPricePerDay = -1;
 
 			int option = (myBool) ? Menu.menuAdd() : Menu.menuDelete();
@@ -18,24 +18,29 @@ public class UpdateData {
 					System.out.println("\n*** Ramificoes Existentes: ***");
 					System.out.println(rentalAgency.getBranches().toString() + "\n");
 				} else {
-					if (!RequestData.availableBranches(p2))
+					if(!RequestData.availableBranches(p2))
 						break;
 				}
 
 				branchName = RequestData.askBranchName();
 
 				if (p3) {
-
+					
 					if (p1.addBranch(branchName)) {
 						FuncBranch.insertBranch(p2, branchName);
+						p1.addBranch(branchName);
 					} else {
 						System.out.println("Ramificacao ja existente");
 					}
 
 				} else {
-
+					
+					if (!myBranches.contains(p1.findBranch(branchName)))
+						System.out.println("Ramificacao inexistente");
+					
 					if (p1.deleteBranch(branchName)) {
 						FuncBranch.deleteBranch(p2, branchName);
+						p1.deleteBranch(branchName);
 					} else {
 						System.out.println("Ramificacao inexistente");
 					}
@@ -44,22 +49,16 @@ public class UpdateData {
 
 				return true;
 			case 2:
-				if (myBool) {
-					System.out.println("\n*** Ramificoes Existentes: ***");
-					System.out.println(rentalAgency.getBranches().toString() + "\n");
-				} else {
-					if (!RequestData.availableBranches(p2))
-						break;
-				}
+				if (!RequestData.availableBranches(p2))
+					break;
 
 				branchName = RequestData.askBranchName();
 
 				if (!RequestData.containsBranch(p1, branchName))
 					break;
 
-				if (!myBool)
-					if (!RequestData.availableCustomers(p1.findBranch(branchName)))
-						break;
+				if (!RequestData.availableCustomers(p1.findBranch(branchName)))
+					break;
 
 				customerName = RequestData.askCustomerName();
 
@@ -69,6 +68,7 @@ public class UpdateData {
 
 					if (p1.addCustomer(branchName, customerName, customerInitialAmount)) {
 						FuncBranch.insertCustomer(p2, branchName, customerName, customerInitialAmount);
+						p1.addCustomer(branchName, customerName, customerInitialAmount);
 					} else {
 						System.out.println("Cliente ja existente");
 					}
@@ -77,6 +77,7 @@ public class UpdateData {
 
 					if (p1.deleteCustomer(branchName, customerName)) {
 						FuncBranch.deleteCustomer(p2, branchName, customerName);
+						p1.deleteCustomer(branchName, customerName);
 					} else {
 						System.out.println("Cliente inexistente");
 					}
@@ -112,12 +113,14 @@ public class UpdateData {
 
 					if (p1.addCar(branchName, customerName, carName, carPricePerDay)) {
 						FuncBranch.insertCar(p2, branchName, customerName, carName, carPricePerDay);
+						p1.addCar(branchName, customerName, carName, carPricePerDay);
 					} else {
 						System.out.println("Carro sem cliente valido ou carro ja existente");
 					}
 				} else {
 					if (p1.deleteCar(branchName, customerName, carName)) {
 						FuncBranch.deleteCar(myBranches, branchName, customerName, carName);
+						p1.deleteCar(branchName, customerName, carName);
 					} else {
 						System.out.println("Carro inexistente");
 					}

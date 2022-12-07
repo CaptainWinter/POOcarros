@@ -68,7 +68,7 @@ public class Main {
 				}
 				break;
 			case 3:
-				if (myBranches.size() == 0)
+				if (!RequestData.availableBranches(myBranches))
 					break;
 
 				branchName = RequestData.askBranchName();
