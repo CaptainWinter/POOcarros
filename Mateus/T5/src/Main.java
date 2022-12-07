@@ -38,7 +38,11 @@ public class Main {
 		System.out.println("Seja bem-vindo, por favor selecione uma opcao:");
 
 		try (ObjectInputStream is = new ObjectInputStream(
+<<<<<<< Updated upstream
 				new FileInputStream("C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\branches.dat"))) { // POR FAZER
+=======
+				new FileInputStream("C:\\Users\\User\\Desktop\\branches.dat"))) { // Alterar a dir para testar
+>>>>>>> Stashed changes
 			myBranches = (ArrayList<Branch>) is.readObject();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
