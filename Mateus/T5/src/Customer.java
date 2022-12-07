@@ -1,0 +1,113 @@
+import java.util.ArrayList;
+
+public class Customer {
+
+	private String name;
+	private ArrayList<Double> transactions;
+	private ArrayList<Double> balances;
+	private double initialBalance;
+	private ArrayList<Car> cars;
+
+	public Customer(String name, double initialAmount) {
+		this.name = name;
+		this.transactions = new ArrayList<Double>();
+		this.balances = new ArrayList<Double>();
+		this.initialBalance = initialAmount;
+		this.cars = new ArrayList<Car>();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public ArrayList<Double> getTransactions() {
+		return transactions;
+	}
+
+	public ArrayList<Double> getBalances() {
+		return balances;
+	}
+
+	public double getInitialBalance() {
+		return initialBalance;
+	}
+
+	public ArrayList<Car> getCars() {
+		return cars;
+	}
+
+	@Override
+	public String toString() {
+		return "nomeCliente=" + name;
+	}
+
+	public boolean addTransaction(String carName, double currentBalance, double amount) {
+
+		if (findCar(carName) != null) {
+
+			Car car = findCar(carName);
+			int days = (int) (amount / car.getPricePerHour());
+
+			if (transactionsSum() == 0 && initialBalance >= amount) {
+				car.rentCar(this.name, currentBalance, days);
+				this.transactions.add(amount);
+				this.balances.add(initialBalance - amount);
+				return true;
+			} else if (currentBalance >= amount) {
+				car.rentCar(this.name, currentBalance, days);
+				this.transactions.add(amount);
+				this.balances.add(currentBalance - amount);
+				return true;
+			} else {
+				return false;
+			}
+
+		} else {
+			return false;
+		}
+
+	}
+
+	public double transactionsSum() {
+
+		double sum = 0;
+
+		for (int i = 0; i < this.balances.size(); i++) {
+			sum += this.transactions.get(i);
+		}
+
+		return sum;
+
+	}
+
+	public double currentBalance() {
+		return this.initialBalance - this.transactionsSum();
+	}
+
+	public boolean newCar(String carName, double pricePerDay) {
+
+		if (findCar(carName) == null) {
+			this.cars.add(new Car(carName, pricePerDay));
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public Car findCar(String carName) {
+
+		for (int i = 0; i < this.cars.size(); i++) {
+
+			Car checkedCar = this.cars.get(i);
+
+			if (checkedCar.getName().equals(carName))
+				return checkedCar;
+
+		}
+
+		return null;
+
+	}
+
+}

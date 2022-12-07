@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.ArrayList;
+
+public class FuncBranch {
+
+	public static void inserirLivro(ArrayList<Livro> livros) {
+		System.out.println("Qual o número do Livro? ");
+		int num = Ler.umInt();
+		for (int i = 0; i < livros.size(); i++) {
+			if (livros.get(i).getId() == num) {
+				System.out.println("Já existe um livro com esse número");
+				return;
+			}
+		}
+		System.out.println("Qual o nome do Livro? ");
+		String nome = Ler.umaString();
+		System.out.println("Qual o autor do Livro? ");
+		String autor = Ler.umaString();
+		Livro l = new Livro(num, nome, autor);
+
+		livros.add(l);
+		atualizarFicheiro(livros);
+	}
+
+	public static void apagarLivro(ArrayList<Livro> livros) {
+
+		System.out.println("Qual o número do Livro? ");
+
+		int num = Ler.umInt();
+
+		for (int i = 0; i < livros.size(); i++) {
+
+			if (livros.get(i).getId() == num) {
+				livros.remove(i);
+			}
+
+		}
+
+		atualizarFicheiro(livros);
+
+	}
+	
+}

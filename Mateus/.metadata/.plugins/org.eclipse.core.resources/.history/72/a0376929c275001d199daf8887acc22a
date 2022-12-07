@@ -1,0 +1,40 @@
+import java.io.*;
+import java.util.ArrayList;
+
+public class FuncBranch {
+
+	public static void insertBranch(ArrayList<Branch> branches, String branchName) {
+		Branch branch = new Branch(branchName);
+		branches.add(branch);		
+		updateFile(branches);
+	}
+
+	public static void deleteBranch(ArrayList<Branch> branches) {
+
+		System.out.println("Qual o número do Livro? ");
+
+		int num = Ler.umInt();
+
+		for (int i = 0; i < branches.size(); i++) {
+
+			if (branches.get(i).getId() == num) {
+				branches.remove(i);
+			}
+
+		}
+
+		updateFile(branches);
+
+	}
+	
+	public static void updateFile(ArrayList<Branch> branches) {
+		try (ObjectOutputStream os = new ObjectOutputStream(
+				new FileOutputStream("C:\\\\Users\\\\aluno\\\\Desktop\\\\livros.dat"))) {
+			os.writeObject(branches);
+			os.flush();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+}

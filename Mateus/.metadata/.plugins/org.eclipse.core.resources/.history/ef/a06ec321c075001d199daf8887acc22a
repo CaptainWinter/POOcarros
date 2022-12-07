@@ -1,0 +1,115 @@
+import java.io.*;
+import java.util.ArrayList;
+
+public class Main {
+
+	static RentalAgency rentalAgency = new RentalAgency("RentalCarsByGroup11");
+
+	@SuppressWarnings("unchecked")
+	public static void main(String[] args) {
+		
+		ArrayList<Branch> myBranches = new ArrayList<Branch>();
+
+		System.out.println("Seja bem-vindo, por favor selecione uma opcao:");
+
+		try {
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream("C:\\Users\\aluno\\Desktop\\livros.dat"));
+			myBranches = (ArrayList<Branch>) is.readObject();
+		} catch () {}
+		
+		boolean run = true;
+
+		while (run) {
+
+			System.out.println();
+			int opcion = menu();
+			String branchName, customerName, carName;
+			int customerInitialAmount;
+
+			switch (opcion) {
+			case 1:
+				branchName = askBranchName();
+				if (!rentalAgency.addBranch(branchName))
+					System.out.println("Ramificacao ja existente");
+				break;
+			case 2:
+				availableBranches();
+				branchName = askBranchName();
+				customerName = askCustomerName();
+				customerInitialAmount = askCustomerInitialAmount();
+				if (!rentalAgency.addCustomer(branchName, customerName, customerInitialAmount))
+					System.out.println("Cliente ja existente");
+				break;
+			case 3:
+				availableBranches();
+				branchName = askBranchName();
+				availableCustomers(rentalAgency.findBranch(branchName));
+				customerName = askCustomerName();
+				carName = askCarName();
+				customerInitialAmount = askCustomerInitialAmount();
+				if (!rentalAgency.addCar(branchName, customerName, carName, customerInitialAmount))
+					System.out.println("Carro sem cliente valido ou carro ja existente");
+				break;
+			case 4:
+				availableBranches();
+				branchName = askBranchName();
+				rentalAgency.listCustomers(branchName);
+				break;
+			case 5:
+				if(Stats.menu(rentalAgency) < 0)
+					run = false;				
+				break;
+			case 6:
+				System.out.println("Sessao fechada com sucesso!");
+				run = false;
+				break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + opcion);
+			}
+
+		}
+
+	}
+
+	public static int menu() {
+
+		System.out.println("1- Criar uma ramificacao\n" + "2- Criar um cliente\n" + "3- Criar um carro\n"
+				+ "4- Consultar ramificacoes, clientes e carros\n" + "5- Estatisticas\n" + "6- Sair\n");
+
+		int input = Ler.umInt();
+
+		return input;
+
+	}
+
+	public static String askBranchName() {
+		System.out.println("\nDigite um nome para uma ramificacao:");
+		return Ler.umaString();
+	}
+
+	public static String askCustomerName() {
+		System.out.println("\nDigite um nome para um cliente:");
+		return Ler.umaString();
+	}
+
+	public static int askCustomerInitialAmount() {
+		System.out.println("\nDigite o saldo do cliente:");
+		return Ler.umInt();
+	}
+
+	public static String askCarName() {
+		System.out.println("\nDigite um nome para um carro:");
+		return Ler.umaString();
+	}
+
+	public static void availableBranches() {
+		System.out.println("\n*** Ramificoes Disponiveis: ***");
+		System.out.println(rentalAgency.getBranches().toString() + "\n");
+	}
+
+	public static void availableCustomers(Branch branch) {
+		System.out.println("\n*** Clientes Disponiveis: ***");
+		System.out.println(branch.getCustomers().toString() + "\n");
+	}
+
+}
