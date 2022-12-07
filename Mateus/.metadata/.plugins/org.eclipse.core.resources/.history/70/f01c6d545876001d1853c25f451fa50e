@@ -1,0 +1,5 @@
+import java.util.ArrayList;
+
+public interface SingleAbstractMethod {
+	public void sam(RentalAgency parameter1, ArrayList<Branch> parameter2, int parameter3);
+}

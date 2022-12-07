@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Branch {
+@SuppressWarnings("serial")
+public class Branch implements Serializable {
 
 	private String name;
 	private ArrayList<Customer> customers;

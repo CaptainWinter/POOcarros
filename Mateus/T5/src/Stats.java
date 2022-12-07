@@ -15,21 +15,22 @@ public class Stats {
 			if (branchWithMostCustomers(rentalAgency) != null) {
 				System.out.println("Ramificacao com mais clientes: " + branchWithMostCustomers(rentalAgency).getName());
 			} else {
-				System.out.println("Ha uma ou mais ramificações com o maior numero de clientes");
+				System.out.println(
+						"Ha uma ou mais ramificações com o maior numero de clientes ou a ramificacao nao existe");
 			}
 			return 0;
 		case 2:
 			if (customerWithMostCars(rentalAgency) != null) {
 				System.out.println("Cliente com mais carros alugados: " + customerWithMostCars(rentalAgency).getName());
 			} else {
-				System.out.println("Ha um ou mais clientes com o maior numero de carros");
+				System.out.println("Ha um ou mais clientes com o maior numero de carros ou o cliente nao existe");
 			}
 			return 0;
 		case 3:
 			if (mostRentedCar(rentalAgency) != null) {
 				System.out.println("Carro mais alugado: " + mostRentedCar(rentalAgency).getName());
 			} else {
-				System.out.println("Ha um ou mais carros com o maior numero de vezes alugado");
+				System.out.println("Ha um ou mais carros com o maior numero de vezes alugado ou o carro nao existe");
 			}
 			return 0;
 		case 4:

@@ -1,0 +1,45 @@
+public class RequestData {
+
+	public static String askBranchName() {
+		System.out.println("\nDigite um nome para uma ramificacao:");
+		return Ler.umaString();
+	}
+
+	public static String askCustomerName() {
+		System.out.println("\nDigite um nome para um cliente:");
+		return Ler.umaString();
+	}
+
+	public static int askCustomerInitialAmount() {
+		System.out.println("\nDigite o saldo do cliente:");
+		return Ler.umInt();
+	}
+
+	public static String askCarName() {
+		System.out.println("\nDigite um nome para um carro:");
+		return Ler.umaString();
+	}
+
+	public static boolean availableBranches(RentalAgency rentalAgency) {
+		if (rentalAgency.getBranches().size() != 0) {
+			System.out.println("\n*** Ramificoes Disponiveis: ***");
+			System.out.println(rentalAgency.getBranches().toString() + "\n");
+			return true;
+		} else {
+			System.out.println("Sem ramificacoes disponiveis");
+			return false;
+		}
+	}
+
+	public static boolean availableCustomers(Branch branch) {
+		if (branch.getCustomers().size() != 0) {
+			System.out.println("\n*** Clientes Disponiveis: ***");
+			System.out.println(branch.getCustomers().toString() + "\n");
+			return true;
+		} else {
+			System.out.println("Sem clientes disponiveis");
+			return false;
+		}
+	}
+
+}

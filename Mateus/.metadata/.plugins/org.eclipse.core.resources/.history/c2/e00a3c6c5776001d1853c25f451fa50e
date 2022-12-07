@@ -1,0 +1,5 @@
+import java.util.ArrayList;
+
+public interface SingleAbstractMethod {
+	public Pair<ArrayList<String>, Integer> sam(ArrayList<String> parameter1, int parameter2);
+}

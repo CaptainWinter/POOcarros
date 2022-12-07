@@ -1,0 +1,220 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class RentalAgency {
+
+	private String name;
+	private ArrayList<Branch> branches;
+
+	public RentalAgency(String name) {
+		this.name = name;
+		this.branches = new ArrayList<Branch>();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ArrayList<Branch> getBranches() {
+		return branches;
+	}
+
+	public void setBranches(ArrayList<Branch> branches) {
+		this.branches = branches;
+	}
+
+	@Override
+	public String toString() {
+		return "Agencia [nome=" + name + ", ramificacoes=" + branches + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (this == obj)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (getClass() != obj.getClass())
+			return false;
+
+		RentalAgency other = (RentalAgency) obj;
+
+		return Objects.equals(branches, other.branches) && Objects.equals(name, other.name);
+
+	}
+
+	public boolean addBranch(String branchName) {
+
+		if (findBranch(branchName) == null) {
+			this.branches.add(new Branch(branchName));
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public boolean addCustomer(String branchName, String customerName, double initialAmount) {
+
+		Branch branch = findBranch(branchName);
+
+		if (branch != null)
+			return branch.newCustomer(customerName, initialAmount);
+
+		return false;
+
+	}
+
+	public boolean addCustomerTransaction(String branchName, String customerName, String carName, double amount) {
+
+		Branch branch = findBranch(branchName);
+
+		if (branch != null)
+			return branch.addCustomerTransaction(carName, customerName, amount);
+
+		return false;
+
+	}
+
+	public boolean addCar(String branchName, String customerName, String carName, double pricePerDay) {
+
+		Branch branch = findBranch(branchName);
+
+		if (branch != null) {
+
+			Customer customer = branch.findCustomer(customerName);
+
+			if (customer != null)
+				return customer.newCar(carName, pricePerDay);
+
+			return false;
+
+		} else {
+			return false;
+		}
+
+	}
+
+	public boolean deleteBranch(String branchName) {
+
+		if (findBranch(branchName) != null) {
+			this.branches.remove(findBranch(branchName));
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public boolean deleteCustomer(String customerName) {
+
+		ArrayList<Branch> branches = new ArrayList<>();
+
+		for (int i = 0; i < this.branches.size(); i++) {
+
+			Branch branch = this.branches.get(i);
+
+			for (int j = 0; j < branch.getCustomers().size(); j++) {
+
+				Customer customer = branch.getCustomers().get(j);
+
+				if (customerName.equals(customer.getName()))
+					branches.add(branch);
+
+			}
+
+		}
+
+		if (branches.size() == 0) {
+			return false;
+		} else {
+			System.out.println("Ramificacoes em que existe o cliente " + customerName + ":\n");
+			System.out.println(branches);
+			System.out.println("\nDigite o nome da ramificacao da qual quer eliminar o cliente:\n");
+			
+			String branchName = Ler.umaString();
+			
+			
+		}
+
+	}
+
+	public Branch findBranch(String branchName) {
+
+		for (int i = 0; i < this.branches.size(); i++) {
+
+			Branch checkedBranch = this.branches.get(i);
+
+			if (checkedBranch.getName().equals(branchName))
+				return checkedBranch;
+
+		}
+
+		return null;
+
+	}
+
+	public boolean listCustomers(String branchName) {
+
+		Branch branch = findBranch(branchName);
+
+		if (branch != null) {
+
+			ArrayList<Customer> branchCustomers = branch.getCustomers();
+
+			if (branchCustomers.size() != 0) {
+				System.out.println("Detalhes do cliente para a ramificacao " + branch.getName() + "\n");
+			} else {
+				System.out.println("Ramificacao sem clientes");
+				return false;
+			}
+
+			try {
+				for (int i = 0; i < branchCustomers.size(); i++) {
+
+					Customer branchCustomer = branchCustomers.get(i);
+
+					System.out.println("Cliente: " + branchCustomer.getName());
+
+					ArrayList<Double> transactions = branchCustomer.getTransactions();
+					ArrayList<Double> balances = branchCustomer.getBalances();
+
+					System.out.println("[0]  Saldo Inicial= " + branchCustomer.getInitialBalance());
+
+					if (transactions.size() != 0)
+						System.out.println("Transacoes:");
+
+					ArrayList<Car> branchCustomerCars = branchCustomer.getCars();
+
+					for (int j = 0; j < transactions.size(); j++) {
+
+						Car branchCustomerCar = branchCustomerCars.get(i);
+
+						System.out.println("[" + (j + 1) + "]  Quantia= " + transactions.get(j) + "  Saldo= "
+								+ balances.get(j) + "  Carro= " + branchCustomerCar.getName());
+
+					}
+
+				}
+			} catch (IndexOutOfBoundsException e) {
+				System.out.println("\n*** ERRO ***\n" + " Impossível de realizar transação!" + "\n");
+			}
+
+			return true;
+
+		} else {
+			System.out.println("\nRamificacao não encontrada\n");
+			return false;
+		}
+
+	}
+
+}

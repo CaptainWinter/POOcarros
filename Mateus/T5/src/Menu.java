@@ -1,0 +1,37 @@
+public class Menu {
+
+	public static int menu() {
+
+		System.out.println("1- Criar uma ramificacao, cliente ou carro\n"
+				+ "2- Eliminar uma ramificacao, cliente ou carro\n" + "3- Consultar ramificacoes, clientes e carros\n"
+				+ "4- Consultar ficheiro\n" + "5- Estatisticas\n" + "6- Sair\n");
+
+		int input = Ler.umInt();
+
+		return input;
+
+	}
+
+	public static int menuAdd() {
+
+		System.out.println("Criar:\n");
+		System.out.println("\t1- Uma ramificacao\n" + "\t2- Um cliente\n" + "\t3- Um  carro\n" + "\t4- Voltar atras");
+
+		int input = Ler.umInt();
+
+		return input;
+
+	}
+
+	public static int menuDelete() {
+
+		System.out.println("Eliminar:\n");
+		System.out.println("\t1- Uma ramificacao\n" + "\t2- Um cliente\n" + "\t3- Um  carro\n" + "\t4- Voltar atras");
+
+		int input = Ler.umInt();
+
+		return input;
+
+	}
+
+}

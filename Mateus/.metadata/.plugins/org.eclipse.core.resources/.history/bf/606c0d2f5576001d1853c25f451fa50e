@@ -1,0 +1,16 @@
+import java.util.ArrayList;
+
+public class Pair<T, U> {
+
+	private T element0;
+	private U element1;
+	
+	public static <T, U> Pair<T, U> createPair(T element0, U element1) {
+		return new Pair<T, U>(element0, element1);
+	}
+	
+	public Pair(T element0, U element1) {
+		this.element0 
+	}
+	
+}

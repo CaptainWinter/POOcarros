@@ -1,0 +1,135 @@
+import java.util.ArrayList;
+
+public class UpdateData {
+
+	public static boolean update(RentalAgency rentalAgency, ArrayList<Branch> myBranches, boolean myBool) {
+
+		SingleAbstractMethod myInterface = (p1, p2, p3) -> {
+
+			String branchName, customerName, carName;
+			int customerInitialAmount = -1;
+			double carPricePerDay = -1;
+
+			int option = (myBool) ? Menu.menuAdd() : Menu.menuDelete();
+
+			switch (option) {
+			case 1:
+				if (myBool) {
+					System.out.println("\n*** Ramificoes Existentes: ***");
+					System.out.println(rentalAgency.getBranches().toString() + "\n");
+				} else {
+					RequestData.availableBranches(p1);
+				}
+
+				branchName = RequestData.askBranchName();
+
+				if (p3) {
+
+					if (p1.addBranch(branchName)) {
+						FuncBranch.insertBranch(p2, branchName);
+					} else {
+						System.out.println("Ramificacao ja existente");
+					}
+
+				} else {
+
+					if (p1.deleteBranch(branchName)) {
+						FuncBranch.deleteBranch(p2, branchName);
+					} else {
+						System.out.println("Ramificacao inexistente");
+					}
+
+				}
+
+				return true;
+			case 2:
+				if (!RequestData.availableBranches(p1))
+					break;
+
+				branchName = RequestData.askBranchName();
+
+				if (!RequestData.containsBranch(p1, branchName))
+					break;
+
+				if (!RequestData.availableCustomers(p1.findBranch(branchName)))
+					break;
+
+				customerName = RequestData.askCustomerName();
+
+				if (p3) {
+
+					customerInitialAmount = RequestData.askCustomerInitialAmount();
+
+					if (p1.addCustomer(branchName, customerName, customerInitialAmount)) {
+						FuncBranch.insertCustomer(p2, branchName, customerName, customerInitialAmount);
+					} else {
+						System.out.println("Cliente ja existente");
+					}
+
+				} else {
+
+					if (p1.deleteCustomer(branchName, customerName)) {
+						FuncBranch.deleteCustomer(p2, branchName, customerName);
+					} else {
+						System.out.println("Cliente inexistente");
+					}
+
+				}
+
+				return true;
+			case 3:
+				if (!RequestData.availableBranches(p1))
+					break;
+
+				branchName = RequestData.askBranchName();
+
+				if (!RequestData.containsBranch(p1, branchName))
+					break;
+
+				if (!RequestData.availableCustomers(p1.findBranch(branchName)))
+					break;
+
+				customerName = RequestData.askCustomerName();
+
+				if (!RequestData.containsCustomer(p1, customerName))
+					break;
+
+				if (!RequestData.availableCars(p1.findCustomer(branchName, customerName)))
+					break;
+
+				carName = RequestData.askCarName();
+
+				if (p3) {
+
+					carPricePerDay = RequestData.askCarPricePerDay();
+
+					if (p1.addCar(branchName, customerName, carName, carPricePerDay)) {
+						FuncBranch.insertCar(p2, branchName, customerName, carName, carPricePerDay);
+					} else {
+						System.out.println("Carro sem cliente valido ou carro ja existente");
+					}
+				} else {
+					if (p1.deleteCar(branchName, customerName, carName)) {
+						FuncBranch.deleteCar(myBranches, branchName, customerName, carName);
+					} else {
+						System.out.println("Carro inexistente");
+					}
+				}
+
+				return true;
+			case 4:
+				return true;
+			default:
+				System.out.println("Valor ilegal tente novamente:\n");
+				break;
+			}
+
+			return false;
+
+		};
+
+		return myInterface.sam(rentalAgency, myBranches, myBool);
+
+	}
+
+}
