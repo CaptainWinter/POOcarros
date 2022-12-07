@@ -38,7 +38,7 @@ public class Main {
 		System.out.println("Seja bem-vindo, por favor selecione uma opcao:");
 
 		try (ObjectInputStream is = new ObjectInputStream(
-				new FileInputStream("C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\branches.dat"))) { // POR FAZER
+				new FileInputStream("C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\branches.dat"))) { // Alterar a dir para testar
 			myBranches = (ArrayList<Branch>) is.readObject();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -65,9 +65,7 @@ public class Main {
 				}
 				break;
 			case 2:
-				if (!availableBranches())
-					break;
-
+				availableBranches();
 				branchName = askBranchName();
 				customerName = askCustomerName();
 				customerInitialAmount = askCustomerInitialAmount();
@@ -78,14 +76,9 @@ public class Main {
 				}
 				break;
 			case 3:
-				if (!availableBranches())
-					break;
-
+				availableBranches();
 				branchName = askBranchName();
-
-				if (!availableCustomers(rentalAgency.findBranch(branchName)))
-					break;
-
+				availableCustomers(rentalAgency.findBranch(branchName));
 				customerName = askCustomerName();
 				carName = askCarName();
 				customerInitialAmount = askCustomerInitialAmount();
@@ -112,8 +105,7 @@ public class Main {
 				run = false;
 				break;
 			default:
-				System.out.println("Valor ilegal tente novamente:\n");
-				break;
+				throw new IllegalArgumentException("Unexpected value: " + opcion);
 			}
 
 		}
@@ -152,26 +144,14 @@ public class Main {
 		return Ler.umaString();
 	}
 
-	public static boolean availableBranches() {
-		if (rentalAgency.getBranches().size() != 0) {
-			System.out.println("\n*** Ramificoes Disponiveis: ***");
-			System.out.println(rentalAgency.getBranches().toString() + "\n");
-			return true;
-		} else {
-			System.out.println("Sem ramificacoes disponiveis");
-			return false;
-		}
+	public static void availableBranches() {
+		System.out.println("\n*** Ramificoes Disponiveis: ***");
+		System.out.println(rentalAgency.getBranches().toString() + "\n");
 	}
 
-	public static boolean availableCustomers(Branch branch) {
-		if (branch.getCustomers().size() != 0) {
-			System.out.println("\n*** Clientes Disponiveis: ***");
-			System.out.println(branch.getCustomers().toString() + "\n");
-			return true;
-		} else {
-			System.out.println("Sem clientes disponiveis");
-			return false;
-		}
+	public static void availableCustomers(Branch branch) {
+		System.out.println("\n*** Clientes Disponiveis: ***");
+		System.out.println(branch.getCustomers().toString() + "\n");
 	}
 
 }
