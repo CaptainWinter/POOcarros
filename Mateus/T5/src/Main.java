@@ -37,8 +37,10 @@ public class Main {
 
 		try {
 			ObjectInputStream is = new ObjectInputStream(
-					new FileInputStream("C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\branches.dat")); // MUDAR A
-																											// DIR AQUI
+					new FileInputStream("C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\branches.dat")); // MUDAR A DIR AQUI
+					//new FileInputStream("path\\to\\Duarte\\branches.dat"));
+					//new FileInputStream("path\\to\\Pedro\\branches.dat"));
+					//new FileInputStream("/home/TheCaptain/branches.dat")); // nota: estou a usar / em vez de \\ pq o Linux funciona assim
 			myBranches = (ArrayList<Branch>) is.readObject();
 		} catch (IOException e) {
 			System.out.println("Ficheiro vazio.\n");
