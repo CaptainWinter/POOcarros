@@ -15,8 +15,7 @@ public class Stats {
 			if (branchWithMostCustomers(rentalAgency) != null) {
 				System.out.println("Ramificacao com mais clientes: " + branchWithMostCustomers(rentalAgency).getName());
 			} else {
-				System.out.println(
-						"Ha uma ou mais ramificações com o maior numero de clientes ou a ramificacao nao existe");
+				System.out.println("Ha uma ou mais ramificações com o maior numero de clientes ou a ramificacao nao existe");
 			}
 			return 0;
 		case 2:

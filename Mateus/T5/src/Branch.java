@@ -25,6 +25,11 @@ public class Branch implements Serializable {
 	public String toString() {
 		return "nomeRamificacao= " + name;
 	}
+	
+	public Object clone() {
+		Branch copia = new Branch(this.name);
+		return copia;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

@@ -27,6 +27,11 @@ public class RentalAgency {
 		this.branches = branches;
 	}
 
+	public Object clone() {
+		RentalAgency copia = new RentalAgency(this.name);
+		return copia;
+	}
+	
 	@Override
 	public String toString() {
 		return "Agencia [nome=" + name + ", ramificacoes=" + branches + "]";

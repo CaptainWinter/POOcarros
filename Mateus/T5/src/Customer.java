@@ -36,6 +36,11 @@ public class Customer {
 		return cars;
 	}
 
+	public Object clone() {
+		Customer copia = new Customer(this.name, this.initialAmount);
+		return copia;
+	}
+	
 	@Override
 	public String toString() {
 		return "nomeCliente=" + name;
