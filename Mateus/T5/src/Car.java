@@ -32,7 +32,14 @@ public class Car {
 	public void setRented(boolean isRented) {
 		this.isRented = isRented;
 	}
-
+	
+	@Override
+	public Object clone() {
+		Car copia = new Car(this.name, this.pricePerDay);
+		copia.setRented(isRented());
+		return copia;
+	}
+	
 	@Override
 	public String toString() {
 		return "Carro [nome=" + name + ", precoPorDia=" + pricePerDay + "]";

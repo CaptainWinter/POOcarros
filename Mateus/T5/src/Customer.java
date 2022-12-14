@@ -20,20 +20,48 @@ public class Customer {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public ArrayList<Double> getTransactions() {
 		return transactions;
+	}
+
+	public void setTransactions(ArrayList<Double> transactions) {
+		this.transactions = transactions;
 	}
 
 	public ArrayList<Double> getBalances() {
 		return balances;
 	}
 
+	public void setBalances(ArrayList<Double> balances) {
+		this.balances = balances;
+	}
+
 	public double getInitialBalance() {
 		return initialBalance;
 	}
 
+	public void setInitialBalance(double initialBalance) {
+		this.initialBalance = initialBalance;
+	}
+
 	public ArrayList<Car> getCars() {
 		return cars;
+	}
+
+	public void setCars(ArrayList<Car> cars) {
+		this.cars = cars;
+	}
+
+	public Object clone() {
+		Customer copia = new Customer(this.name, this.initialBalance);
+		copia.setTransactions(getTransactions());
+		copia.setBalances(getBalances());
+		copia.setCars(getCars());
+		return copia;
 	}
 
 	@Override

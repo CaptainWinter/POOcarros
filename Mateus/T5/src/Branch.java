@@ -21,9 +21,24 @@ public class Branch implements Serializable {
 		return customers;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setCustomers(ArrayList<Customer> customers) {
+		this.customers = customers;
+	}
+
 	@Override
 	public String toString() {
 		return "nomeRamificacao= " + name;
+	}
+	
+	@Override
+	public Object clone() {
+		Branch copia = new Branch(this.name);
+		copia.setCustomers(getCustomers());
+		return copia;
 	}
 
 	@Override

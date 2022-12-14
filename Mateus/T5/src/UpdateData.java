@@ -10,7 +10,7 @@ public class UpdateData {
 			double customerInitialAmount = -1;
 			double carPricePerDay = -1;
 
-			int option = (myBool) ? Menu.menuAdd() : Menu.menuDelete();
+			int option = Menu.secondMenu(myBool);
 
 			switch (option) {
 			case 1:

@@ -12,20 +12,9 @@ public class Menu {
 
 	}
 
-	public static int menuAdd() {
+	public static int secondMenu(boolean myBool) {
 
-		System.out.println("Criar:\n");
-		System.out.println("\t1- Uma ramificacao\n" + "\t2- Um cliente\n" + "\t3- Um  carro\n" + "\t4- Voltar atras");
-
-		int input = Ler.umInt();
-
-		return input;
-
-	}
-
-	public static int menuDelete() {
-
-		System.out.println("Eliminar:\n");
+		System.out.println(myBool ? "Criar:\n" : "Eliminar");
 		System.out.println("\t1- Uma ramificacao\n" + "\t2- Um cliente\n" + "\t3- Um  carro\n" + "\t4- Voltar atras");
 
 		int input = Ler.umInt();
