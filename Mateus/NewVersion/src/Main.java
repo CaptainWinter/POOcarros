@@ -4,16 +4,17 @@ public class Main {
 	public static void main(String[] args) {
 
 		// Directories
-		// Mateus Aleixo - "C:\Users\mateu\OneDrive\Ambiente de Trabalho\POO"
 
 		String mateusDir = "C:\\Users\\mateu\\OneDrive\\Ambiente de Trabalho\\POO";
 		String duarteDir = "";
 		String pedroDir = "";
 		String manuelDir = "";
 
-		String carsFile = mateusDir + "\\cars.dat";
-		String customersFile = mateusDir + "customers.dat";
-		String rentalsFile = mateusDir + "\\rentals.dat";
+		String dir = mateusDir;
+		
+		String carsFile = dir + "\\cars.dat";
+		String customersFile = dir + "\\customers.dat";
+		String rentalsFile = dir + "\\rentals.dat";
 
 		CarRental carRental = new CarRental(carsFile, customersFile, rentalsFile);
 
