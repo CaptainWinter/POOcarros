@@ -338,8 +338,19 @@ public class CarRental implements Serializable {
 				int id = Ler.umInt();
 				System.out.print("Digite o id de cliente: ");
 				String customerId = Ler.umaString();
+
+				if (customersMap.get(Integer.parseInt(customerId)) == null) {
+					System.out.println("Cliente nao encontrado\n");
+					break;
+				}
+
 				System.out.print("Digite o id de carro: ");
 				String carId = Ler.umaString();
+
+				if (carsMap.get(Integer.parseInt(carId)) == null) {
+					System.out.println("Carro nao encontrado");
+					break;
+				}
 
 				Rental rental = new Rental(id, customerId, carId);
 				rentalsMap.put(id, rental);
@@ -393,6 +404,9 @@ public class CarRental implements Serializable {
 		System.out.println("Total de clientes: " + totalCustomers);
 		System.out.println("Total de alugueres: " + totalRentals);
 		System.out.println("Carros disponiveis: " + availableCars);
+		System.out.println("Carro mais alugado: " + Stats.mostRentedCar(cars));
+		System.out.println("Endereco mais popular: " + Stats.mostPopularAddress(customers));
+		System.out.println("Tempo medio de aluguer: " + Stats.averageRentalDuration(rentals) + " segundos");
 		System.out.println("\n");
 	}
 

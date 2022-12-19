@@ -55,7 +55,7 @@ public class Car implements Serializable {
 	public void setRented(boolean rented) {
 		this.rented = rented;
 	}
-
+	
 	@Override
 	public String toString() {
 		return id + ": " + year + " " + brand + " " + model;
