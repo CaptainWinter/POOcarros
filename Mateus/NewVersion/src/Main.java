@@ -17,9 +17,9 @@ public class Main {
 		String rentalsFile = dir + "\\rentals.dat";
 
 		CarRental carRental = new CarRental(carsFile, customersFile, rentalsFile);
-
+		
 		carRental.loadData();
-
+		
 		while (true) {
 
 			int option = carRental.showMainMenu();

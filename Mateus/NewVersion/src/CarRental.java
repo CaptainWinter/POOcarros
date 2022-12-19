@@ -1,17 +1,16 @@
-
-//import java.io.FileInputStream;
-//import java.io.ObjectInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CarRental {
+@SuppressWarnings("serial")
+public class CarRental implements Serializable {
 	// ArrayLists to store the data of the car rental agency
 	private ArrayList<Car> cars = new ArrayList<>();
 	private ArrayList<Customer> customers = new ArrayList<>();
@@ -29,60 +28,115 @@ public class CarRental {
 
 	public CarRental(String carsFile, String customersFile, String rentalsFile) {
 		CARS_FILE = carsFile;
-		CUSTOMERS_FILE = carsFile;
+		CUSTOMERS_FILE = customersFile;
 		RENTALS_FILE = rentalsFile;
 	}
 
 	// Loads the data from the files
-	// ERROR
-	@SuppressWarnings({ "unchecked", "resource" })
+	@SuppressWarnings({ "unchecked" })
 	public void loadData() {
+
 		try {
-			ObjectInputStream is = new ObjectInputStream(new FileInputStream(CARS_FILE));
-			cars = (ArrayList<Car>) is.readObject();
+			FileInputStream inputStream = new FileInputStream(CARS_FILE);
+			ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+			cars = (ArrayList<Car>) objectInputStream.readObject();
+			objectInputStream.close();
+			inputStream.close();
 		} catch (IOException e) {
 			System.out.println("Ficheiro de carros vazio");
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ObjectInputStream is = new ObjectInputStream(new FileInputStream(CUSTOMERS_FILE));
-			customers = (ArrayList<Customer>) is.readObject();
+			FileInputStream inputStream = new FileInputStream(CUSTOMERS_FILE);
+			ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+			customers = (ArrayList<Customer>) objectInputStream.readObject();
+			objectInputStream.close();
+			inputStream.close();
 		} catch (IOException e) {
 			System.out.println("Ficheiro de clientes vazio");
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
 		try {
-			ObjectInputStream is = new ObjectInputStream(new FileInputStream(RENTALS_FILE));
-			rentals = (ArrayList<Rental>) is.readObject();
+			FileInputStream inputStream = new FileInputStream(RENTALS_FILE);
+			ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+			rentals = (ArrayList<Rental>) objectInputStream.readObject();
+			objectInputStream.close();
+			inputStream.close();
 		} catch (IOException e) {
 			System.out.println("Ficheiro de alugueres vazio\n");
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
+
+		// DEBUGGING
+		System.out.println(cars.toString());
+		System.out.println(customers.toString());
+		System.out.println(rentals.toString());
+
+		for (int i = 0; i < cars.size(); i++) {
+			Car car = cars.get(i);
+			if (car != null)
+				this.carsMap.putIfAbsent(car.getId(), car);
+		}
+		for (int i = 0; i < customers.size(); i++) {
+			Customer customer = customers.get(i);
+			if (customer != null)
+				this.customersMap.putIfAbsent(customer.getId(), customer);
+		}
+		for (int i = 0; i < rentals.size(); i++) {
+			Rental rental = rentals.get(i);
+			if (rental != null)
+				this.rentalsMap.putIfAbsent(rental.getId(), rental);
+		}
+
 	}
 
 	// Saves the data to the files
 	public void updateFile() {
-		try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(CARS_FILE))) {
-			os.writeObject(cars);
-			os.flush();
+
+		for (int i = 0; i < carsMap.size(); i++) {
+			cars.add(i, carsMap.get(i));
+		}
+		for (int i = 0; i < customersMap.size(); i++) {
+			customers.add(i, customersMap.get(i));
+		}
+		for (int i = 0; i < rentals.size(); i++) {
+			rentals.add(i, rentalsMap.get(i));
+		}
+
+		try {
+			FileOutputStream outputStream = new FileOutputStream(CARS_FILE);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+			objectOutputStream.writeObject(cars);
+			objectOutputStream.flush();
+			objectOutputStream.close();
+			outputStream.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(CUSTOMERS_FILE))) {
-			os.writeObject(customers);
-			os.flush();
+		try {
+			FileOutputStream outputStream = new FileOutputStream(CUSTOMERS_FILE);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+			objectOutputStream.writeObject(cars);
+			objectOutputStream.flush();
+			objectOutputStream.close();
+			outputStream.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(RENTALS_FILE))) {
-			os.writeObject(rentals);
-			os.flush();
+		try {
+			FileOutputStream outputStream = new FileOutputStream(RENTALS_FILE);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+			objectOutputStream.writeObject(cars);
+			objectOutputStream.flush();
+			objectOutputStream.close();
+			outputStream.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+
 	}
 
 	// Shows the main menu and returns the selected option
@@ -125,6 +179,7 @@ public class CarRental {
 				carsMap.put(id, car);
 
 				updateFile();
+
 			} else if (option == 2) {
 				// View cars
 				System.out.println("Carros:");
@@ -208,7 +263,7 @@ public class CarRental {
 				customersMap.put(id, customer);
 
 				updateFile();
-				updateFile();
+
 			} else if (option == 2) {
 				// View customers
 				System.out.println("Clientes:");
@@ -240,6 +295,7 @@ public class CarRental {
 					}
 
 					updateFile();
+
 				} else {
 					System.out.println("Cliente nao encontrado");
 				}
@@ -250,7 +306,6 @@ public class CarRental {
 				Customer customer = customersMap.get(id);
 				if (customer != null) {
 					customersMap.remove(id);
-
 					updateFile();
 				} else {
 					System.out.println("Cliente nao encontrado");
@@ -291,6 +346,7 @@ public class CarRental {
 				rentalsMap.put(id, rental);
 
 				updateFile();
+
 			} else if (option == 2) {
 				// Return car
 				System.out.print("Digite o id: ");
@@ -298,7 +354,6 @@ public class CarRental {
 				Rental rental = rentalsMap.get(id);
 				if (rental != null) {
 					rental.setEndDate(new Date());
-
 					updateFile();
 				} else {
 					System.out.println("Aluguer nao encontrado");

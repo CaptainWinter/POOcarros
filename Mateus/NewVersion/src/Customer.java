@@ -1,4 +1,7 @@
-public class Customer {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Customer implements Serializable {
 	private int id;
 	private String name;
 	private String address;

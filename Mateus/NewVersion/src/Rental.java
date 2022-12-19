@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.Date;
 
-public class Rental {
+@SuppressWarnings("serial")
+public class Rental implements Serializable {
 	private int id;
 	private String carId;
 	private String customerId;
