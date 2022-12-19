@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Car implements Serializable{
+public class Car implements Serializable {
 	private int id;
 	private String brand;
 	private String model;

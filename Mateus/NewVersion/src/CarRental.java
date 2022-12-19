@@ -70,11 +70,6 @@ public class CarRental implements Serializable {
 			System.out.println(e.getMessage());
 		}
 
-		// DEBUGGING
-		System.out.println(cars.toString());
-		System.out.println(customers.toString());
-		System.out.println(rentals.toString());
-
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = cars.get(i);
 			if (car != null)
@@ -96,21 +91,27 @@ public class CarRental implements Serializable {
 	// Saves the data to the files
 	public void updateFile() {
 
-		for (int i = 0; i < carsMap.size(); i++) {
-			cars.add(i, carsMap.get(i));
+		int index = 0;
+
+		for (int key : carsMap.keySet()) {
+			cars.add(index, carsMap.get(key));
+			index++;
 		}
-		for (int i = 0; i < customersMap.size(); i++) {
-			customers.add(i, customersMap.get(i));
+		index = 0;
+		for (int key : customersMap.keySet()) {
+			customers.add(index, customersMap.get(key));
+			index++;
 		}
-		for (int i = 0; i < rentals.size(); i++) {
-			rentals.add(i, rentalsMap.get(i));
+		index = 0;
+		for (int key : rentalsMap.keySet()) {
+			rentals.add(index, rentalsMap.get(key));
+			index++;
 		}
 
 		try {
 			FileOutputStream outputStream = new FileOutputStream(CARS_FILE);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 			objectOutputStream.writeObject(cars);
-			objectOutputStream.flush();
 			objectOutputStream.close();
 			outputStream.close();
 		} catch (IOException e) {
@@ -119,8 +120,7 @@ public class CarRental implements Serializable {
 		try {
 			FileOutputStream outputStream = new FileOutputStream(CUSTOMERS_FILE);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-			objectOutputStream.writeObject(cars);
-			objectOutputStream.flush();
+			objectOutputStream.writeObject(customers);
 			objectOutputStream.close();
 			outputStream.close();
 		} catch (IOException e) {
@@ -129,8 +129,7 @@ public class CarRental implements Serializable {
 		try {
 			FileOutputStream outputStream = new FileOutputStream(RENTALS_FILE);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-			objectOutputStream.writeObject(cars);
-			objectOutputStream.flush();
+			objectOutputStream.writeObject(rentals);
 			objectOutputStream.close();
 			outputStream.close();
 		} catch (IOException e) {
