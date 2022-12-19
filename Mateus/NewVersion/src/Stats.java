@@ -15,7 +15,7 @@ public class Stats {
 
 			String carName = car.getBrand() + " " + car.getModel();
 
-			if (carCountMap.containsKey(carName))
+			if (carCountMap.containsKey(carName) && car.isRented())
 				carCountMap.put(carName, carCountMap.get(carName) + 1);
 			else
 				carCountMap.put(carName, 1);
@@ -69,22 +69,38 @@ public class Stats {
 
 	}
 
-	public static double averageRentalDuration(ArrayList<Rental> rentals) {
+	public static String averageRentalDuration(ArrayList<Rental> rentals) {
 
 		if (rentals.size() == 0)
-			return 0;
+			return "0 segundos";
 
 		long totalDuration = 0;
 
 		for (Rental rental : rentals) {
-			long duration = rental.getEndDate().getTime() - rental.getStartDate().getTime();
-			totalDuration += duration;
+			if (rental.getStartDate() != null && rental.getEndDate() != null) {
+				long duration = rental.getEndDate().getTime() - rental.getStartDate().getTime();
+				totalDuration += duration;
+			}
 		}
 
 		long averageDuration = totalDuration / rentals.size();
 		double seconds = averageDuration / 1000;
-
-		return seconds;
+		double minutes = seconds / 60;
+		double hours = minutes / 60;
+		double days = hours / 24;
+		String averageRentalDuration;
+				
+		if (seconds <= 60) {
+			averageRentalDuration = seconds + " segundos";
+		} else if (minutes <= 60) {
+			averageRentalDuration = minutes + " minutos";
+		} else if (hours <= 24) {
+			averageRentalDuration = hours + " horas";
+		} else {
+			averageRentalDuration = days + " dias";
+		}
+		
+		return averageRentalDuration;
 
 	}
 

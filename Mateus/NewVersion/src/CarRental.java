@@ -167,6 +167,12 @@ public class CarRental implements Serializable {
 				// Create car
 				System.out.print("Digite o id: ");
 				int id = Ler.umInt();
+
+				if (carsMap.keySet().contains(id)) {
+					System.out.println("Id ja existente\n");
+					break;
+				}
+
 				System.out.print("Digite a marca: ");
 				String brand = Ler.umaString();
 				System.out.print("Digite o modelo: ");
@@ -353,6 +359,7 @@ public class CarRental implements Serializable {
 				}
 
 				Rental rental = new Rental(id, customerId, carId);
+				carsMap.get(Integer.parseInt(carId)).setRented(true);
 				rentalsMap.put(id, rental);
 
 				updateFile();
@@ -364,6 +371,7 @@ public class CarRental implements Serializable {
 				Rental rental = rentalsMap.get(id);
 				if (rental != null) {
 					rental.setEndDate(new Date());
+					carsMap.get(Integer.parseInt(rental.getCarId())).setRented(false);
 					updateFile();
 				} else {
 					System.out.println("Aluguer nao encontrado");
@@ -406,7 +414,7 @@ public class CarRental implements Serializable {
 		System.out.println("Carros disponiveis: " + availableCars);
 		System.out.println("Carro mais alugado: " + Stats.mostRentedCar(cars));
 		System.out.println("Endereco mais popular: " + Stats.mostPopularAddress(customers));
-		System.out.println("Tempo medio de aluguer: " + Stats.averageRentalDuration(rentals) + " segundos");
+		System.out.println("Tempo medio de aluguer: " + Stats.averageRentalDuration(rentals));
 		System.out.println("\n");
 	}
 

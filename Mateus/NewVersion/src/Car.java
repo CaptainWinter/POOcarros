@@ -6,14 +6,15 @@ public class Car implements Serializable {
 	private String brand;
 	private String model;
 	private int year;
-	private boolean rented;
+	private boolean isRented;
+	private static boolean rented = false;
 
 	public Car(int id, String brand, String model, int year) {
 		this.id = id;
 		this.brand = brand;
 		this.model = model;
 		this.year = year;
-		this.rented = false;
+		this.isRented = false;
 	}
 
 	public int getId() {
@@ -47,13 +48,19 @@ public class Car implements Serializable {
 	public void setYear(int year) {
 		this.year = year;
 	}
-
+	
 	public boolean isRented() {
-		return rented;
+		return isRented;
 	}
 	
-	public void setRented(boolean rented) {
-		this.rented = rented;
+	public void setRented(boolean isRented) {
+		this.isRented = isRented;
+		if (isRented)
+			rented = true;
+	}
+	
+	public boolean beenRented() {
+		return rented;
 	}
 	
 	@Override
