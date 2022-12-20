@@ -3,14 +3,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("serial")
-public class CarRental implements Serializable {
+public class CarRental {
 	// ArrayLists to store the data of the car rental agency
 	private ArrayList<Car> cars = new ArrayList<>();
 	private ArrayList<Customer> customers = new ArrayList<>();
@@ -342,6 +340,12 @@ public class CarRental implements Serializable {
 				// Rent car
 				System.out.print("Digite o id: ");
 				int id = Ler.umInt();
+
+				if (rentalsMap.get(id) != null) {
+					System.out.println("Id indisponivel\n");
+					break;
+				}
+
 				System.out.print("Digite o id de cliente: ");
 				String customerId = Ler.umaString();
 
@@ -354,7 +358,7 @@ public class CarRental implements Serializable {
 				String carId = Ler.umaString();
 
 				if (carsMap.get(Integer.parseInt(carId)) == null) {
-					System.out.println("Carro nao encontrado");
+					System.out.println("Carro nao encontrado\n");
 					break;
 				}
 
@@ -366,6 +370,17 @@ public class CarRental implements Serializable {
 
 			} else if (option == 2) {
 				// Return car
+				int checker = 0;
+				for (Car car : carsMap.values()) {
+					if (!car.isRented())
+						checker++;
+				}
+
+				if (checker == carsMap.size()) {
+					System.out.println("Sem carros por devolver\n");
+					break;				
+				}
+
 				System.out.print("Digite o id: ");
 				int id = Ler.umInt();
 				Rental rental = rentalsMap.get(id);

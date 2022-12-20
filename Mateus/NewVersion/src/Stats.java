@@ -15,7 +15,7 @@ public class Stats {
 
 			String carName = car.getBrand() + " " + car.getModel();
 
-			if (carCountMap.containsKey(carName) && car.isRented())
+			if (carCountMap.containsKey(carName) && car.beenRented())
 				carCountMap.put(carName, carCountMap.get(carName) + 1);
 			else
 				carCountMap.put(carName, 1);
